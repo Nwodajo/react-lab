@@ -10,7 +10,7 @@ function App() {
       
   return (
     <div>
-      <h1>My Todos </h1>
+      <h1>My Todos List </h1>
 
     <ul>
       {todoList.map(todo =>(
