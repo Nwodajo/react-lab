@@ -1,13 +1,18 @@
-# My Todo App
-## Description
-This is a simple React app that displays a list of todos using().
+##  Description
+This is a simple React application that displays a list of tasks using the `.map()` function.
 
-## Installation 
-1.Clone the respository
-2. Run npm install
-3. Run npm run dev 
+##  Features
+- Displays a list of todos
+- Uses React components
+- Renders data using `.map()`
 
-# Usage
-open http://localhost:5173/ in your broweser to see the app.
- # Description 
- This  is a simple React TODO App  that displays a list of tasks using map(). 
+## Technologies Used
+- React
+- JavaScript (ES6)
+- Vite
+
+##  Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/Nwodajo/react-lab.git
