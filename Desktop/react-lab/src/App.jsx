@@ -11,11 +11,23 @@ function App() {
       ]
       
   return (
+
     <div>
-      <h1>My Todos List </h1>
-<TodoForm/>
-<TodoList todo={todoList}/>   
+
+      <h1>My Todos List</h1>
+
+
+
+      <TodoForm />
+
+
+
+      <TodoList todos={todoList} />
+
     </div>
-);
+
+  );
+
 }
+
 export default App;
