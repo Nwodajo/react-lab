@@ -6,13 +6,13 @@ body {
     padding: 0;
 }
 
-div { 
+.app-cotainer{ 
     max-width: 500px;
-    margin: 50px auto;
+    margin: 60px auto;
     background: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 04px 10px rgba(0, 0, 0, 1);
+    box-shadow: 08px 20px rgba(0, 0, 0, 1);
 }
 h1 { 
     text-align: center;
@@ -21,7 +21,7 @@ h1 {
 form {
 display: flex;
 gap: 10px;
-margin-bottom: 15px;
+align-items: center;
 }
 
 input {
@@ -39,14 +39,12 @@ color: white;
 border-radius: 5px;
 cursor: pointer;
 }
-
-button:hover {
-background-color: #0056b3;
+button:hover{ 
+    background-color: #0056b3;
 }
-
 ul { 
 margin-left: 20px;
 }
 li { 
-    margin-bottom: 8pm;
+    margin-bottom: 8px;
 }

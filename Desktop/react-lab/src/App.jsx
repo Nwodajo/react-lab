@@ -12,17 +12,10 @@ function App() {
       
   return (
 
-    <div>
-
+    <div className="app-cotainer">
       <h1>My Todos List</h1>
-
-
-
-      <TodoForm />
-
-
-
-      <TodoList todos={todoList} />
+<TodoForm />
+ <TodoList todos={todoList} />
 
     </div>
 
