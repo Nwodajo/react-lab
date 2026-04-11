@@ -1,4 +1,4 @@
-function TodoList({todos}){
+function TodoList({ todos }) {
     return ( 
         <ul> 
             {todos.map((todo) =>(
