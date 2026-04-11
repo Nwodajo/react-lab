@@ -1,5 +1,5 @@
 import './App.css'
-
+// Lesson 02 components setup 
 function App() {
   const todoList = [
         {id: 1, title: "review resources"},
