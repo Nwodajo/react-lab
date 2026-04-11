@@ -1,4 +1,6 @@
 import './App.css'
+import TodoList from './TodoList';
+import TodoForm from './TodoForm';
 // Lesson 02 components setup 
 function App() {
   const todoList = [
@@ -11,15 +13,9 @@ function App() {
   return (
     <div>
       <h1>My Todos List </h1>
-
-    <ul>
-      {todoList.map(todo =>(
-        <li key={todo.id}>{todo.title}</li>
-      ))}
-    </ul>
-      
+<TodoForm/>
+<TodoList todo={todoList}/>   
     </div>
-
-  );
+);
 }
 export default App;
