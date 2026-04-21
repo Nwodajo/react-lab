@@ -13,11 +13,11 @@ function App() {
   return (
     <div className="app-container">
       <h1>My Todos List</h1>
-<TodoForm />
+<TodoForm setTodoList={setTodoList}/>
  <TodoList todoList={todoList} />
     </div>
-  );
+  )
 
-}
+};
 
 export default App;
