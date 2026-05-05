@@ -25,7 +25,7 @@ function App() {
   }
   return (
     <div className="app-container">
-      <h1>My Todos List</h1>
+      <h1> Todo App</h1>
 <TodoForm onAddTodo={addTodo}/>
  <TodoList todoList={todoList} onCompleteTodo={completeTodo} />
     </div>

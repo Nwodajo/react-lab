@@ -7,11 +7,11 @@
 
     if (filteredTodoList.length === 0){
         return <p>Add todo above to get started</p>
-    }
+    };
     
     return ( 
         <ul> 
-            {todoList.map((todo) =>(
+            {filteredTodoList.map((todo) =>(
                 <TodoListItem key={todo.id} todo={todo}
                 onCompleteTodo={onCompleteTodo}
                 

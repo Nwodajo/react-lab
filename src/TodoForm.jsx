@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 // Lesson 03 update
 function TodoForm({onAddTodo}){
@@ -23,7 +23,7 @@ function TodoForm({onAddTodo}){
             value={workingTodoTitle}
             onChange={handleChange}
             />
-            <button disabled={!setWorkingTodoTitle.trim()}>
+            <button disabled={!workingTodoTitle.trim()}>
                 Add Todo
                 </button>
         </form>
