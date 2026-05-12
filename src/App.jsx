@@ -29,6 +29,18 @@ function App() {
     setTodoList(updatedTodoList);
   }
 
+  function updateTodo(editedTodo) {
+  const updatedTodos = todoList.map((todo) => {
+    if (todo.id === editedTodo.id) {
+      return { ...editedTodo };
+    }
+
+    return todo;
+  });
+
+  setTodoList(updatedTodos);
+}
+
   return (
     <div className="app-container">
       <h1>My Todos List</h1>
@@ -38,12 +50,13 @@ function App() {
       <TodoList
         todoList={todoList}
         onCompleteTodo={completeTodo}
+        onUpdateTodo={onUpdateTodo}
       />
     </div>
   );
 }
 
 export default App;
-// Lesson 02 components setup 
+
 
 
