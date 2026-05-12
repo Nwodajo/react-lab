@@ -1,32 +1,48 @@
-import { useRef } from "react";
+import { useRef, useState } from 'react';
+import TextInputWithLabel from '../shared/TextInputWithLabel';
 
-// Lesson 03 update
-function TodoForm({onAddTodo}){
-    const inputRef = useRef();
+function TodoForm({ onAddTodo }) {
+  const inputRef = useRef();
 
-    const handleAddTodo = (event) => {
-        event.preventDefault();
+  const [workingTodoTitle, setWorkingTodoTitle] =
+    useState('');
 
-        const todoTitle = event.target.todoTitle.value.trim();
-        if (todoTitle) { 
-            onAddTodo(todoTitle);
-            event.target.reset();
-            inputRef.current.focus();
+  const handleAddTodo = (event) => {
+    event.preventDefault();
+
+    const todoTitle = workingTodoTitle.trim();
+
+    if (todoTitle) {
+      onAddTodo(todoTitle);
+
+      setWorkingTodoTitle('');
+
+      inputRef.current.focus();
+    }
+  };
+
+  return (
+    <form onSubmit={handleAddTodo}>
+      <TextInputWithLabel
+        elementId="todoTitle"
+        labelText="Todo"
+        ref={inputRef}
+        value={workingTodoTitle}
+        onChange={(event) =>
+          setWorkingTodoTitle(event.target.value)
         }
-    };
+      />
 
-    return(
-        <form onSubmit={handleAddTodo}>
-            <label htmlFor="todoTitle">Add Todo:</label>
-            <input ref={inputRef}
-            id="todoTitle"
-            name="todoTitle"
-            type="text"
-            placeholder="Todo text"
-            required
-            />
-            <button type="submit">Add New Todo</button>
-        </form>
-    )
+      <button
+        type="submit"
+        disabled={!workingTodoTitle.trim()}
+      >
+        Add Todo
+      </button>
+    </form>
+  );
 }
-export default TodoForm; 
+
+export default TodoForm;
+
+
