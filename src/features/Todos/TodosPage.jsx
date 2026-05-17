@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import TodoForm from './TodoForm';
+import TodoList from './TodoList/TodoList';
 
 function TodosPage({ token }) {
   const [todoList, setTodoList] = useState([]);
@@ -38,11 +40,17 @@ function TodosPage({ token }) {
 
   return (
     <div>
-      {error && <p>{error}</p>}
+      {error && (
+        <div>
+          <p>{error}</p>
+          <button onClick={() => setError('')}>Clear Error</button>
+        </div>
+      )}
 
       {isTodoListLoading && <p>Loading...</p>}
 
-      <h2>Todos Page</h2>
+      <TodoForm />
+      <TodoList todoList={todoList} />
     </div>
   );
 }
