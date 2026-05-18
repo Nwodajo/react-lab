@@ -142,10 +142,12 @@ function TodosPage({ token }) {
         },
         credentials: 'include',
         body: JSON.stringify({
-          title: editedTodo.title,
-          isCompleted: editedTodo.isCompleted,
-          createdAt: editedTodo.createdAt,
-        }),
+  title: editedTodo.title,
+  isCompleted: editedTodo.isCompleted,
+  priority: editedTodo.priority || "medium",
+  createdAt: editedTodo.createdAt,
+}),
+         
       });
 
       if (!response.ok) {
