@@ -6,6 +6,8 @@ function TodosPage({ token }) {
   const [todoList, setTodoList] = useState([]);
   const [error, setError] = useState('');
   const [isTodoListLoading, setIsTodoListLoading] = useState(false);
+  const [sortBy, setSortBy] = useState('creationDate');
+  const [sortDirection, setSortDirection] = useState('desc');
 
   useEffect(() => {
     async function fetchTodos() {
@@ -13,7 +15,12 @@ function TodosPage({ token }) {
         setIsTodoListLoading(true);
         setError('');
 
-        const response = await fetch('/api/tasks', {
+        const params = new URLSearchParams({
+          sortBy,
+          sortDirection,
+        });
+
+        const response = await fetch(`/api/tasks?${params}`, {
           headers: {
             'X-CSRF-TOKEN': token,
           },
@@ -41,7 +48,7 @@ function TodosPage({ token }) {
     if (token) {
       fetchTodos();
     }
-  }, [token]);
+  }, [token, sortBy, sortDirection]);
 
   async function addTodo(todoTitle) {
     const newTodo = {
@@ -142,12 +149,11 @@ function TodosPage({ token }) {
         },
         credentials: 'include',
         body: JSON.stringify({
-  title: editedTodo.title,
-  isCompleted: editedTodo.isCompleted,
-  priority: editedTodo.priority || "medium",
-  createdAt: editedTodo.createdAt,
-}),
-         
+          title: editedTodo.title,
+          isCompleted: editedTodo.isCompleted,
+          priority: editedTodo.priority || 'medium',
+          createdAt: editedTodo.createdAt,
+        }),
       });
 
       if (!response.ok) {
