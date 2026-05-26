@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList/TodoList';
 import FilterInput from '../../shared/FilterInput';
+import SortBy from '../../shared/SortBy';
 import useDebounce from '../../utils/useDebounce';
 
 function TodosPage({ token }) {
@@ -19,6 +20,8 @@ function TodosPage({ token }) {
   const [dataVersion, setDataVersion] = useState(0);
 
   const invalidateCache = useCallback(() => {
+    console.log('Invalidating memo cache after todo mutation');
+
     setDataVersion((prev) => prev + 1);
   }, []);
 
@@ -109,17 +112,22 @@ function TodosPage({ token }) {
 
       const data = await response.json();
 
-      if (!response.ok) {
+      if (!response.ok || !data.task) {
         throw new Error('Failed to add todo');
       }
 
       setTodoList((prev) =>
-        prev.map((todo) => (todo.id === newTodo.id ? data.task : todo))
+        prev.map((todo) =>
+          todo && todo.id === newTodo.id ? data.task : todo
+        )
       );
 
       invalidateCache();
     } catch (error) {
-      setTodoList((prev) => prev.filter((todo) => todo.id !== newTodo.id));
+      setTodoList((prev) =>
+        prev.filter((todo) => todo.id !== newTodo.id)
+      );
+
       setError(error.message);
     }
   }
@@ -137,7 +145,9 @@ function TodosPage({ token }) {
     };
 
     setTodoList((prev) =>
-      prev.map((todo) => (todo.id === id ? updatedTodo : todo))
+      prev.map((todo) =>
+        todo.id === id ? updatedTodo : todo
+      )
     );
 
     try {
@@ -161,7 +171,9 @@ function TodosPage({ token }) {
       invalidateCache();
     } catch (error) {
       setTodoList((prev) =>
-        prev.map((todo) => (todo.id === id ? originalTodo : todo))
+        prev.map((todo) =>
+          todo.id === id ? originalTodo : todo
+        )
       );
 
       setError(error.message);
@@ -249,6 +261,13 @@ function TodosPage({ token }) {
       )}
 
       {isTodoListLoading && <p>Loading...</p>}
+
+      <SortBy
+        sortBy={sortBy}
+        sortDirection={sortDirection}
+        onSortByChange={setSortBy}
+        onSortDirectionChange={setSortDirection}
+      />
 
       <FilterInput
         filterTerm={filterTerm}
