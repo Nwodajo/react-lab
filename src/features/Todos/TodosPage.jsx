@@ -1,13 +1,23 @@
 import { useEffect, useState } from 'react';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList/TodoList';
+import FilterInput from '../../shared/FilterInput';
+import useDebounce from '../../utils/useDebounce';
 
 function TodosPage({ token }) {
   const [todoList, setTodoList] = useState([]);
   const [error, setError] = useState('');
   const [isTodoListLoading, setIsTodoListLoading] = useState(false);
+
   const [sortBy, setSortBy] = useState('creationDate');
   const [sortDirection, setSortDirection] = useState('desc');
+
+  const [filterTerm, setFilterTerm] = useState('');
+  const debouncedFilterTerm = useDebounce(filterTerm, 300);
+
+  function handleFilterChange(newTerm) {
+    setFilterTerm(newTerm);
+  }
 
   useEffect(() => {
     async function fetchTodos() {
@@ -15,10 +25,16 @@ function TodosPage({ token }) {
         setIsTodoListLoading(true);
         setError('');
 
-        const params = new URLSearchParams({
+        const paramsObject = {
           sortBy,
           sortDirection,
-        });
+        };
+
+        if (debouncedFilterTerm) {
+          paramsObject.find = debouncedFilterTerm;
+        }
+
+        const params = new URLSearchParams(paramsObject);
 
         const response = await fetch(`/api/tasks?${params}`, {
           headers: {
@@ -48,7 +64,7 @@ function TodosPage({ token }) {
     if (token) {
       fetchTodos();
     }
-  }, [token, sortBy, sortDirection]);
+  }, [token, sortBy, sortDirection, debouncedFilterTerm]);
 
   async function addTodo(todoTitle) {
     const newTodo = {
@@ -130,14 +146,18 @@ function TodosPage({ token }) {
   }
 
   async function updateTodo(editedTodo) {
-    const originalTodo = todoList.find((todo) => todo.id === editedTodo.id);
+    const originalTodo = todoList.find(
+      (todo) => todo.id === editedTodo.id
+    );
 
     if (!originalTodo) {
       return;
     }
 
     setTodoList((prev) =>
-      prev.map((todo) => (todo.id === editedTodo.id ? editedTodo : todo))
+      prev.map((todo) =>
+        todo.id === editedTodo.id ? editedTodo : todo
+      )
     );
 
     try {
@@ -165,6 +185,7 @@ function TodosPage({ token }) {
           todo.id === editedTodo.id ? originalTodo : todo
         )
       );
+
       setError(error.message);
     }
   }
@@ -174,11 +195,18 @@ function TodosPage({ token }) {
       {error && (
         <div>
           <p>{error}</p>
-          <button onClick={() => setError('')}>Clear Error</button>
+          <button onClick={() => setError('')}>
+            Clear Error
+          </button>
         </div>
       )}
 
       {isTodoListLoading && <p>Loading...</p>}
+
+      <FilterInput
+        filterTerm={filterTerm}
+        onFilterChange={handleFilterChange}
+      />
 
       <TodoForm onAddTodo={addTodo} />
 
