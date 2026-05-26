@@ -211,10 +211,11 @@ function TodosPage({ token }) {
       <TodoForm onAddTodo={addTodo} />
 
       <TodoList
-        todoList={todoList}
-        onCompleteTodo={completeTodo}
-        onUpdateTodo={updateTodo}
-      />
+  todoList={todoList}
+  onCompleteTodo={completeTodo}
+  onUpdateTodo={updateTodo}
+  dataVersion={dataVersion}
+/>
     </div>
   );
 }
