@@ -11,10 +11,7 @@ import SortBy from '../../shared/SortBy';
 import useDebounce from '../../utils/useDebounce';
 
 function TodosPage({ token }) {
-  const [state, dispatch] = useReducer(
-    todoReducer,
-    initialTodoState
-  );
+  const [state, dispatch] = useReducer(todoReducer, initialTodoState);
 
   const {
     todoList,
@@ -30,11 +27,7 @@ function TodosPage({ token }) {
   const debouncedFilterTerm = useDebounce(filterTerm, 300);
 
   const invalidateCache = useCallback(() => {
-    console.log('Invalidating memo cache after todo mutation');
-
-    dispatch({
-      type: TODO_ACTIONS.INCREMENT_DATA_VERSION,
-    });
+    dispatch({ type: TODO_ACTIONS.INVALIDATE_CACHE });
   }, []);
 
   function handleFilterChange(newTerm) {
@@ -49,10 +42,7 @@ function TodosPage({ token }) {
       try {
         dispatch({ type: TODO_ACTIONS.FETCH_START });
 
-        const paramsObject = {
-          sortBy,
-          sortDirection,
-        };
+        const paramsObject = { sortBy, sortDirection };
 
         if (debouncedFilterTerm) {
           paramsObject.find = debouncedFilterTerm;
@@ -61,9 +51,7 @@ function TodosPage({ token }) {
         const params = new URLSearchParams(paramsObject);
 
         const response = await fetch(`/api/tasks?${params}`, {
-          headers: {
-            'X-CSRF-TOKEN': token,
-          },
+          headers: { 'X-CSRF-TOKEN': token },
           credentials: 'include',
         });
 
@@ -154,13 +142,9 @@ function TodosPage({ token }) {
 
   async function completeTodo(id) {
     const originalTodo = todoList.find((todo) => todo.id === id);
-
     if (!originalTodo) return;
 
-    const updatedTodo = {
-      ...originalTodo,
-      isCompleted: true,
-    };
+    const updatedTodo = { ...originalTodo, isCompleted: true };
 
     dispatch({
       type: TODO_ACTIONS.COMPLETE_TODO_START,
@@ -201,7 +185,6 @@ function TodosPage({ token }) {
     const originalTodo = todoList.find(
       (todo) => todo.id === editedTodo.id
     );
-
     if (!originalTodo) return;
 
     dispatch({
@@ -246,12 +229,7 @@ function TodosPage({ token }) {
       {error && (
         <div>
           <p>{error}</p>
-
-          <button
-            onClick={() =>
-              dispatch({ type: TODO_ACTIONS.CLEAR_ERROR })
-            }
-          >
+          <button onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_ERROR })}>
             Clear Error
           </button>
         </div>
@@ -269,11 +247,7 @@ function TodosPage({ token }) {
             Clear Filter Error
           </button>
 
-          <button
-            onClick={() =>
-              dispatch({ type: TODO_ACTIONS.RESET_FILTERS })
-            }
-          >
+          <button onClick={() => dispatch({ type: TODO_ACTIONS.RESET_FILTERS })}>
             Reset Filters
           </button>
         </div>
@@ -287,19 +261,13 @@ function TodosPage({ token }) {
         onSortByChange={(newSortBy) =>
           dispatch({
             type: TODO_ACTIONS.SET_SORT,
-            payload: {
-              sortBy: newSortBy,
-              sortDirection,
-            },
+            payload: { sortBy: newSortBy, sortDirection },
           })
         }
         onSortDirectionChange={(newSortDirection) =>
           dispatch({
             type: TODO_ACTIONS.SET_SORT,
-            payload: {
-              sortBy,
-              sortDirection: newSortDirection,
-            },
+            payload: { sortBy, sortDirection: newSortDirection },
           })
         }
       />
