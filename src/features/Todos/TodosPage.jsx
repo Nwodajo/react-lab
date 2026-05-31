@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useReducer } from 'react';
+import { useAuth } from '../../contexts/AuthContext';
 import {
   todoReducer,
   initialTodoState,
@@ -10,8 +11,13 @@ import FilterInput from '../../shared/FilterInput';
 import SortBy from '../../shared/SortBy';
 import useDebounce from '../../utils/useDebounce';
 
-function TodosPage({ token }) {
-  const [state, dispatch] = useReducer(todoReducer, initialTodoState);
+function TodosPage() {
+  const { token } = useAuth();
+
+  const [state, dispatch] = useReducer(
+    todoReducer,
+    initialTodoState
+  );
 
   const {
     todoList,
