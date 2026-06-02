@@ -58,10 +58,23 @@ export function AuthProvider({ children }) {
   };
 
   const logout = async () => {
+  try {
+    if (token) {
+      await fetch('/user/logoff', {
+        method: 'POST',
+        headers: {
+          'X-CSRF-TOKEN': token,
+        },
+        credentials: 'include',
+      });
+    }
+  } finally {
     setEmail('');
     setToken('');
-    return { success: true };
-  };
+  }
+
+  return { success: true };
+};
 
   const value = {
     email,
