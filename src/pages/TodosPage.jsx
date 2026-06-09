@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useReducer } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../contexts/AuthContext';
 import {
   todoReducer,
   initialTodoState,
   TODO_ACTIONS,
-} from '../../reducers/todoReducer';
-import TodoForm from './TodoForm';
-import TodoList from './TodoList/TodoList';
-import FilterInput from '../../shared/FilterInput';
-import SortBy from '../../shared/SortBy';
-import useDebounce from '../../utils/useDebounce';
+} from '../reducers/todoReducer';
+import TodoForm from '../features/Todos/TodoForm';
+import TodoList from '../features/Todos/TodoList/TodoList';
+import FilterInput from '../shared/FilterInput';
+import SortBy from '../shared/SortBy';
+import useDebounce from '../utils/useDebounce';
 
 function TodosPage() {
   const { token } = useAuth();
