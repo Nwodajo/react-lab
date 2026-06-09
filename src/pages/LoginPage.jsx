@@ -7,7 +7,8 @@ function LoginPage() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [authError, setAuthError] = useState('');
+  const [isLoggingOn, setIsLoggingOn] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,43 +21,51 @@ function LoginPage() {
     }
   }, [isAuthenticated, navigate, from]);
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setError('');
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    setIsLoggingOn(true);
+    setAuthError('');
 
     const result = await login(email, password);
 
     if (!result.success) {
-      setError(result.error);
+      setAuthError(result.error);
     }
+
+    setIsLoggingOn(false);
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
+    <div>
+      {authError && <p>{authError}</p>}
 
-      {error && <p>{error}</p>}
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="email">Email</label>
 
-      <div>
-        <label>Email</label>
         <input
+          id="email"
           type="email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(event) => setEmail(event.target.value)}
+          required
         />
-      </div>
 
-      <div>
-        <label>Password</label>
+        <label htmlFor="password">Password</label>
+
         <input
+          id="password"
           type="password"
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(event) => setPassword(event.target.value)}
+          required
         />
-      </div>
 
-      <button type="submit">Login</button>
-    </form>
+        <button type="submit" disabled={isLoggingOn}>
+          {isLoggingOn ? 'Logging in...' : 'Log On'}
+        </button>
+      </form>
+    </div>
   );
 }
 
