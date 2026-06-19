@@ -1,0 +1,47 @@
+.todoForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.todoForm button {
+  min-height: 44px;
+  padding: 0.75rem 1rem;
+  background-color: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.todoForm button:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.todoForm button:focus {
+  outline: 3px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+.todoForm button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .todoForm {
+    padding: 1rem;
+  }
+
+  .todoForm button {
+    width: 100%;
+  }
+}
