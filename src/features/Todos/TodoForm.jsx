@@ -1,17 +1,17 @@
 import { useRef, useState } from 'react';
 import TextInputWithLabel from '../../shared/TextInputWithLabel';
-import {isValidTodoTitle} from '../../utils/todoValidation';
+import { isValidTodoTitle } from '../../utils/todoValidation';
+import { sanitizeInput } from '../../utils/sanitizeInput';
 
 function TodoForm({ onAddTodo }) {
   const inputRef = useRef();
 
-  const [workingTodoTitle, setWorkingTodoTitle] =
-    useState('');
+  const [workingTodoTitle, setWorkingTodoTitle] = useState('');
 
   const handleAddTodo = (event) => {
     event.preventDefault();
 
-    const todoTitle = workingTodoTitle.trim();
+    const todoTitle = sanitizeInput(workingTodoTitle);
 
     if (todoTitle) {
       onAddTodo(todoTitle);
@@ -45,5 +45,3 @@ function TodoForm({ onAddTodo }) {
 }
 
 export default TodoForm;
-
-
