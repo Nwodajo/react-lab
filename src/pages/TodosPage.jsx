@@ -124,7 +124,7 @@ function TodosPage() {
 
       const data = await response.json();
 
-      if (!response.ok || !data.task) {
+      if (!response.ok) {
         throw new Error('Failed to add todo');
       }
 
@@ -132,7 +132,7 @@ function TodosPage() {
         type: TODO_ACTIONS.ADD_TODO_SUCCESS,
         payload: {
           tempId: newTodo.id,
-          savedTodo: data.task,
+          savedTodo: data,
         },
       });
 
@@ -152,7 +152,10 @@ function TodosPage() {
     const originalTodo = todoList.find((todo) => todo.id === id);
     if (!originalTodo) return;
 
-    const updatedTodo = { ...originalTodo, isCompleted: true };
+    const updatedTodo = {
+      ...originalTodo,
+      isCompleted: !originalTodo.isCompleted,
+    };
 
     dispatch({
       type: TODO_ACTIONS.COMPLETE_TODO_START,
@@ -168,7 +171,7 @@ function TodosPage() {
         },
         credentials: 'include',
         body: JSON.stringify({
-          isCompleted: true,
+          isCompleted: updatedTodo.isCompleted,
           createdAt: originalTodo.createdAt,
         }),
       });
