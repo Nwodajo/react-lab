@@ -2,59 +2,61 @@
 
 ## Description
 
-A modern React Todo application built with React, Vite, and React Router. Users can create, edit, complete, search, sort, and filter todos through a clean, responsive, and accessible interface.
+A modern React Todo application built with **React, Vite, and React Router**. Users can create, edit, update, complete, search, sort, and filter todos through a clean, responsive, and accessible interface. The application demonstrates modern React development practices, reusable components, protected routes, client-side validation, and secure input sanitization.
+
+---
 
 ## Live Demo
 
 **https://react-4a9sxa7py-nasistu.vercel.app**
 
-## Demo video
- https://drive.google.com/file/d/1kjZBK1_tTDxkyxY6vnUEHWr-wJGcGsQ4/view?usp=sharing
+---
 
+## Demo Video
+
+**https://drive.google.com/file/d/1kjZBK1_tTDxkyxY6vnUEHWr-wJGcGsQ4/view?usp=sharing**
+
+---
 
 ## Features
 
-* Add new todos
-* Edit existing todos
-* Mark todos as completed
-* Filter by All, Active, and Completed
-* Search todos by title
-* Sort todos by creation date
-* Protected routes
-* User profile page
-* Responsive design
-* Client-side input validation
-* DOMPurify input sanitization
-* Accessible forms and buttons
+* ✅ Create new todos
+* ✅ Edit existing todos
+* ✅ Mark todos as completed
+* ✅ Search todos by title
+* ✅ Filter by All, Active, and Completed
+* ✅ Sort todos by creation date
+* ✅ Protected routes with authentication
+* ✅ User Profile page
+* ✅ Responsive design for desktop and mobile
+* ✅ Client-side form validation
+* ✅ DOMPurify input sanitization for security
+* ✅ Loading, error, and empty states
+
+---
 
 ## Screenshots
 
 ### Desktop
 
-Add a screenshot named `desktop.png` inside a `screenshots` folder.
-
-```text
-screenshots/
-└── desktop.png
-```
+![Desktop Screenshot](./screenshots/desktop.png)
 
 ### Mobile
 
-Add a screenshot named `mobile.png` inside a `screenshots` folder.
+![Mobile Screenshot](./screenshots/mobile.png)
 
-```text
-screenshots/
-└── mobile.png
-```
+---
 
 ## Technologies Used
 
 * React
 * React Router
-* JavaScript (ES6)
 * Vite
+* JavaScript (ES6+)
 * CSS Modules
 * DOMPurify
+
+---
 
 ## Installation
 
@@ -76,13 +78,13 @@ Install dependencies:
 npm install
 ```
 
-Start the development server:
+Run the development server:
 
 ```bash
 npm run dev
 ```
 
-Build for production:
+Build the production version:
 
 ```bash
 npm run build
@@ -94,6 +96,8 @@ Preview the production build:
 npm run preview
 ```
 
+---
+
 ## Environment Variables
 
 Create a `.env` file in the project root:
@@ -102,9 +106,11 @@ Create a `.env` file in the project root:
 VITE_TARGET=https://ctd-learns-node-l42tx.ondigitalocean.app
 ```
 
-For Vercel, add the same environment variable in:
+For Vercel deployment, add the same environment variable under:
 
 **Project Settings → Environment Variables**
+
+---
 
 ## Available Scripts
 
@@ -112,26 +118,36 @@ For Vercel, add the same environment variable in:
 * `npm run build` – Build the production application
 * `npm run preview` – Preview the production build
 
+---
+
 ## Design Decisions
 
 * Built with reusable React components
 * React Router for client-side navigation
 * CSS Modules for scoped and maintainable styling
-* Responsive layouts for desktop and mobile devices
+* Responsive layouts optimized for desktop and mobile devices
 * Accessible forms, buttons, and keyboard focus states
-* Client-side validation with DOMPurify input sanitization
+* Client-side validation and DOMPurify input sanitization for improved security
+* Reducer pattern for predictable state management
+
+---
 
 ## Future Improvements
 
-* Dark mode support
+* Dark mode
 * Drag-and-drop todo reordering
 * Backend database integration
-* User authentication enhancements
+* Enhanced user authentication
 * Unit and integration testing
+* Cloud data persistence
+
+---
 
 ## License
 
 MIT License
+
+---
 
 ## Author
 
