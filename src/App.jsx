@@ -1,22 +1,26 @@
-import './App.css';
-import { Routes, Route } from 'react-router';
-import HomePage from './pages/HomePage';
-import AboutPage from './pages/AboutPage';
-import LoginPage from './pages/LoginPage';
-import TodosPage from './pages/TodosPage';
-import ProfilePage from './pages/ProfilePage';
-import NotFoundPage from './pages/NotFoundPage';
-import RequireAuth from './components/RequireAuth';
-import Header from './shared/Header';
+import styles from "./App.module.css";
+import { Routes, Route } from "react-router";
+import HomePage from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
+import LoginPage from "./pages/LoginPage";
+import TodosPage from "./pages/TodosPage";
+import ProfilePage from "./pages/ProfilePage";
+import NotFoundPage from "./pages/NotFoundPage";
+import RequireAuth from "./components/RequireAuth";
+import Header from "./shared/Header";
 
 function App() {
   return (
-    <>
+    <div className={styles.appContainer}>
       <Header />
+
       <Routes>
         <Route path="/" element={<HomePage />} />
+
         <Route path="/about" element={<AboutPage />} />
+
         <Route path="/login" element={<LoginPage />} />
+
         <Route
           path="/todos"
           element={
@@ -25,6 +29,7 @@ function App() {
             </RequireAuth>
           }
         />
+
         <Route
           path="/profile"
           element={
@@ -33,9 +38,10 @@ function App() {
             </RequireAuth>
           }
         />
+
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </>
+    </div>
   );
 }
 

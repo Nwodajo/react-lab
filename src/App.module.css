@@ -1,0 +1,13 @@
+.appContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+}
+
+@media (max-width: 768px) {
+  .appContainer {
+    padding: 1rem;
+  }
+}

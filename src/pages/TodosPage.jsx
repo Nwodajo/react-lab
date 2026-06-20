@@ -12,16 +12,14 @@ import FilterInput from '../shared/FilterInput';
 import SortBy from '../shared/SortBy';
 import StatusFilter from '../shared/StatusFilter';
 import useDebounce from '../utils/useDebounce';
+import styles from './TodosPage.module.css';
 
 function TodosPage() {
   const { token } = useAuth();
   const [searchParams] = useSearchParams();
   const statusFilter = searchParams.get('status') || 'all';
 
-  const [state, dispatch] = useReducer(
-    todoReducer,
-    initialTodoState
-  );
+  const [state, dispatch] = useReducer(todoReducer, initialTodoState);
 
   const {
     todoList,
@@ -96,13 +94,7 @@ function TodosPage() {
     if (token) {
       fetchTodos();
     }
-  }, [
-    token,
-    sortBy,
-    sortDirection,
-    debouncedFilterTerm,
-    dataVersion,
-  ]);
+  }, [token, sortBy, sortDirection, debouncedFilterTerm, dataVersion]);
 
   async function addTodo(todoTitle) {
     const newTodo = {
@@ -132,7 +124,7 @@ function TodosPage() {
 
       const data = await response.json();
 
-      if (!response.ok || !data.task) {
+      if (!response.ok) {
         throw new Error('Failed to add todo');
       }
 
@@ -140,7 +132,7 @@ function TodosPage() {
         type: TODO_ACTIONS.ADD_TODO_SUCCESS,
         payload: {
           tempId: newTodo.id,
-          savedTodo: data.task,
+          savedTodo: data,
         },
       });
 
@@ -160,7 +152,10 @@ function TodosPage() {
     const originalTodo = todoList.find((todo) => todo.id === id);
     if (!originalTodo) return;
 
-    const updatedTodo = { ...originalTodo, isCompleted: true };
+    const updatedTodo = {
+      ...originalTodo,
+      isCompleted: !originalTodo.isCompleted,
+    };
 
     dispatch({
       type: TODO_ACTIONS.COMPLETE_TODO_START,
@@ -176,7 +171,7 @@ function TodosPage() {
         },
         credentials: 'include',
         body: JSON.stringify({
-          isCompleted: true,
+          isCompleted: updatedTodo.isCompleted,
           createdAt: originalTodo.createdAt,
         }),
       });
@@ -198,9 +193,7 @@ function TodosPage() {
   }
 
   async function updateTodo(editedTodo) {
-    const originalTodo = todoList.find(
-      (todo) => todo.id === editedTodo.id
-    );
+    const originalTodo = todoList.find((todo) => todo.id === editedTodo.id);
     if (!originalTodo) return;
 
     dispatch({
@@ -241,18 +234,18 @@ function TodosPage() {
   }
 
   return (
-    <div>
+    <main className={styles.todosPage}>
       {error && (
-        <div>
+        <section className={styles.errorBox}>
           <p>{error}</p>
           <button onClick={() => dispatch({ type: TODO_ACTIONS.CLEAR_ERROR })}>
             Clear Error
           </button>
-        </div>
+        </section>
       )}
 
       {filterError && (
-        <div>
+        <section className={styles.errorBox}>
           <p>{filterError}</p>
 
           <button
@@ -266,34 +259,38 @@ function TodosPage() {
           <button onClick={() => dispatch({ type: TODO_ACTIONS.RESET_FILTERS })}>
             Reset Filters
           </button>
-        </div>
+        </section>
       )}
 
-      {isTodoListLoading && <p>Loading...</p>}
+      {isTodoListLoading && (
+        <p className={styles.loadingMessage}>Loading todos...</p>
+      )}
 
-      <SortBy
-        sortBy={sortBy}
-        sortDirection={sortDirection}
-        onSortByChange={(newSortBy) =>
-          dispatch({
-            type: TODO_ACTIONS.SET_SORT,
-            payload: { sortBy: newSortBy, sortDirection },
-          })
-        }
-        onSortDirectionChange={(newSortDirection) =>
-          dispatch({
-            type: TODO_ACTIONS.SET_SORT,
-            payload: { sortBy, sortDirection: newSortDirection },
-          })
-        }
-      />
+      <section className={styles.controls}>
+        <SortBy
+          sortBy={sortBy}
+          sortDirection={sortDirection}
+          onSortByChange={(newSortBy) =>
+            dispatch({
+              type: TODO_ACTIONS.SET_SORT,
+              payload: { sortBy: newSortBy, sortDirection },
+            })
+          }
+          onSortDirectionChange={(newSortDirection) =>
+            dispatch({
+              type: TODO_ACTIONS.SET_SORT,
+              payload: { sortBy, sortDirection: newSortDirection },
+            })
+          }
+        />
 
-      <StatusFilter />
+        <StatusFilter />
 
-      <FilterInput
-        filterTerm={filterTerm}
-        onFilterChange={handleFilterChange}
-      />
+        <FilterInput
+          filterTerm={filterTerm}
+          onFilterChange={handleFilterChange}
+        />
+      </section>
 
       <TodoForm onAddTodo={addTodo} />
 
@@ -304,7 +301,7 @@ function TodosPage() {
         dataVersion={dataVersion}
         statusFilter={statusFilter}
       />
-    </div>
+    </main>
   );
 }
 

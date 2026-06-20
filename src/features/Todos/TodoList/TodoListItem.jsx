@@ -1,22 +1,29 @@
 import { useState } from 'react';
-import TextInputWithLabel from "../../../shared/TextInputWithLabel.jsx";
-import { isValidTodoTitle } from "../../../utils/todoValidation.js";
+import TextInputWithLabel from '../../../shared/TextInputWithLabel.jsx';
+import { isValidTodoTitle } from '../../../utils/todoValidation.js';
+import './TodoListItem.css';
 
 function TodoListItem({
   todo,
   onCompleteTodo,
   onUpdateTodo,
 }) {
+  const todoTitle =
+    todo.title ||
+    todo.todoTitle ||
+    todo.name ||
+    '';
+
   const [isEditing, setIsEditing] =
     useState(false);
 
   const [workingTitle, setWorkingTitle] =
-    useState(todo.title);
+    useState(todoTitle);
 
   function handleUpdate(event) {
-    if (!isEditing) return;
-
     event.preventDefault();
+
+    if (!isEditing) return;
 
     onUpdateTodo({
       ...todo,
@@ -27,23 +34,27 @@ function TodoListItem({
   }
 
   return (
-    <li>
-      <form onSubmit={handleUpdate}>
+    <li className="todo-item">
+      <form
+        className="todo-item-form"
+        onSubmit={handleUpdate}
+      >
         {isEditing ? (
           <>
             <TextInputWithLabel
-              value={workingTitle}
               elementId={`todo-${todo.id}`}
               labelText="Edit Todo"
+              value={workingTitle}
               onChange={(event) =>
                 setWorkingTitle(event.target.value)
               }
             />
 
             <button
+              className="button cancel-button"
               type="button"
               onClick={() => {
-                setWorkingTitle(todo.title);
+                setWorkingTitle(todoTitle);
                 setIsEditing(false);
               }}
             >
@@ -51,19 +62,24 @@ function TodoListItem({
             </button>
 
             <button
-              type="button"
-              disabled={!isValidTodoTitle(workingTitle)}
-              onClick={handleUpdate}
+              className="button update-button"
+              type="submit"
+              disabled={
+                !isValidTodoTitle(workingTitle)
+              }
             >
               Update
             </button>
           </>
         ) : (
           <>
-            <label>
+            <label
+              className="checkbox-label"
+              htmlFor={`checkbox-${todo.id}`}
+            >
               <input
+                id={`checkbox-${todo.id}`}
                 type="checkbox"
-                id={`checkbox${todo.id}`}
                 checked={todo.isCompleted}
                 onChange={() =>
                   onCompleteTodo(todo.id)
@@ -72,11 +88,16 @@ function TodoListItem({
             </label>
 
             <span
+              className={`todo-title ${
+                todo.isCompleted
+                  ? 'completed'
+                  : ''
+              }`}
               onClick={() =>
                 setIsEditing(true)
               }
             >
-              {todo.title}
+              {todoTitle}
             </span>
           </>
         )}
