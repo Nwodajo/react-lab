@@ -8,6 +8,10 @@ A modern React Todo application built with React, Vite, and React Router. Users 
 
 **https://react-4a9sxa7py-nasistu.vercel.app**
 
+## Demo video
+ https://drive.google.com/file/d/1kjZBK1_tTDxkyxY6vnUEHWr-wJGcGsQ4/view?usp=sharing
+
+
 ## Features
 
 * Add new todos

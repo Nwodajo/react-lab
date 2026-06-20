@@ -1,27 +1,27 @@
-import { useNavigate } from 'react-router';
-import { useAuth } from '../contexts/AuthContext';
-import Navigation from './Navigation';
+
+import { Link } from "react-router";
+import styles from "./Header.module.css";
 
 function Header() {
-  const { token, logout } = useAuth();
-  const navigate = useNavigate();
-
-  async function handleLogout() {
-    await logout();
-    navigate('/login');
-  }
-
   return (
-    <header>
-      <h1>Todo List</h1>
+    <header className={styles.header}>
+      <nav className={styles.nav}>
+        <Link className={styles.link} to="/about">
+          About
+        </Link>
 
-      <Navigation />
+        <Link className={styles.link} to="/todos">
+          Todos
+        </Link>
 
-      {token && (
-        <button onClick={handleLogout}>
-          Log Out
-        </button>
-      )}
+        <Link className={styles.link} to="/profile">
+          Profile
+        </Link>
+      </nav>
+
+      <button className={styles.logoutButton}>
+        Log Out
+      </button>
     </header>
   );
 }
