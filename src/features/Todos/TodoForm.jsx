@@ -1,28 +1,20 @@
 import { useRef, useState } from 'react';
-import DOMPurify from 'dompurify';
 import TextInputWithLabel from '../../shared/TextInputWithLabel';
 import { isValidTodoTitle } from '../../utils/todoValidation';
+import { sanitizeInput } from '../../utils/sanitizeInput';
 import styles from './TodoForm.module.css';
 
 function TodoForm({ onAddTodo }) {
   const inputRef = useRef();
-
   const [workingTodoTitle, setWorkingTodoTitle] = useState('');
   const [error, setError] = useState('');
-
-  const sanitizeInput = (value) => {
-    return DOMPurify.sanitize(value, {
-      ALLOWED_TAGS: [],
-      ALLOWED_ATTR: [],
-    });
-  };
+  const maxTodoLength = 100;
 
   const handleChange = (event) => {
     const sanitizedValue = sanitizeInput(event.target.value);
-
     setWorkingTodoTitle(sanitizedValue);
 
-    if (sanitizedValue.length > 100) {
+    if (sanitizedValue.length >= maxTodoLength) {
       setError('Todo must be 100 characters or less.');
     } else {
       setError('');
@@ -32,7 +24,7 @@ function TodoForm({ onAddTodo }) {
   const handleAddTodo = (event) => {
     event.preventDefault();
 
-    const todoTitle = sanitizeInput(workingTodoTitle.trim());
+    const todoTitle = sanitizeInput(workingTodoTitle);
 
     if (!todoTitle) {
       setError('Please enter a todo.');
@@ -45,10 +37,8 @@ function TodoForm({ onAddTodo }) {
     }
 
     onAddTodo(todoTitle);
-
     setWorkingTodoTitle('');
     setError('');
-
     inputRef.current.focus();
   };
 
@@ -60,14 +50,10 @@ function TodoForm({ onAddTodo }) {
         ref={inputRef}
         value={workingTodoTitle}
         onChange={handleChange}
-        maxLength={100}
+        maxLength={maxTodoLength}
       />
 
-      {error && (
-        <p className={styles.errorMessage}>
-          {error}
-        </p>
-      )}
+      {error && <p className={styles.errorMessage}>{error}</p>}
 
       <button
         type="submit"
